@@ -7,6 +7,7 @@
 
 """
 import logging
+import os
 try:
     # Python 3
     from http.client import HTTPException
@@ -496,6 +497,9 @@ class Client(object):
             path = kwdargs['_endpoint'] + key
         else:
             path = self.key_endpoint + key
+
+        write_timeout = os.environ.get("ETCD_WRITE_TIMEOUT", 60)
+        params["timeout"] = write_timeout
 
         response = self.api_execute(path, method, params=params)
         return self._result_from_response(response)
