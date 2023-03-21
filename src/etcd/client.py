@@ -499,9 +499,8 @@ class Client(object):
             path = self.key_endpoint + key
 
         write_timeout = os.environ.get("ETCD_WRITE_TIMEOUT", 60)
-        params["timeout"] = write_timeout
 
-        response = self.api_execute(path, method, params=params)
+        response = self.api_execute(path, method, params=params, timeout=write_timeout)
         return self._result_from_response(response)
 
     def refresh(self, key, ttl, **kwdargs):
